@@ -2,9 +2,39 @@
 
 ## 🚀 Configuración para Render
 
+### ⚠️ IMPORTANTE: Versión de Python
+
+Este proyecto requiere **Python 3.11.9** debido a la compatibilidad de dependencias.
+
+### Opción 1: Blueprint con render.yaml (Recomendado)
+
+El archivo `render.yaml` está configurado. Solo necesitas:
+
+1. **Crear nuevo Blueprint en Render**
+   - Ve a Dashboard → New → Blueprint
+   - Conecta tu repositorio de GitHub
+   - Render detectará automáticamente `render.yaml`
+
+2. **Configura Variables de Entorno** (en el dashboard):
+   ```env
+   DATABASE_URL=postgresql://usuario:password@host/database
+   SECRET_KEY=tu_clave_secreta_muy_segura_aqui
+   CORS_ORIGINS=*
+   ALGORITHM=HS256
+   ACCESS_TOKEN_EXPIRE_MINUTES=300
+   ```
+
+3. **Deploy** - Click "Apply" y listo
+
+---
+
+### Opción 2: Configuración Manual
+
+Si prefieres configurar manualmente:
+
 ### Build Command
 ```bash
-pip install -r requirements.txt
+pip install --upgrade pip && pip install -r requirements.txt
 ```
 
 ### Start Command
@@ -19,7 +49,14 @@ python create_tables.py && alembic stamp head && uvicorn main:app --host 0.0.0.0
 
 ### Variables de Entorno en Render
 
-Configura estas variables en el dashboard de Render:
+**⚠️ CRÍTICO: Añade estas primero:**
+
+```env
+PYTHON_VERSION=3.11.9
+PIP_NO_CACHE_DIR=1
+```
+
+**Luego añade las variables de tu aplicación:**
 
 ```env
 DATABASE_URL=postgresql://usuario:password@host/database
